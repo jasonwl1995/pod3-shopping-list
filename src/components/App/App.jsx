@@ -1,7 +1,7 @@
-// import {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import React from 'react';
 import axios from 'axios';
-const useEffect = React.useEffect;
+// const useEffect = React.useEffect;
 import Header from '../Header/Header.jsx'
 import './App.css';
 
@@ -15,9 +15,8 @@ function App() {
       // We want to fetch items, on load
         fetchList();
     }, []); 
-    const fetchList = () => {
-    
 
+    const fetchList = () => {
         axios.get('/list')
             .then(response => {
                 console.log('got a response!', response.data);
@@ -29,6 +28,8 @@ function App() {
                 console.log('ruh-roh....', err);
             });
     };
+
+  
 
 
 
