@@ -8,7 +8,13 @@ import './App.css';
 
 function App() {
 
-    const [shoppingList, setShoppingList] = useState([]);
+    const [shoppingList, setShoppingList] = useState([]);//empty array to start
+    const [shoppingItem, setShoppingItem] = useState('');
+    const [shoppingItemQuantity, setShoppingItemQuantity] = useState(0); // as a number
+    const [shoppingItemUnit, setShoppingItemUnit] = useState('');
+
+
+
     useEffect(() => {
       // This is our `onReady` function
 
@@ -28,7 +34,25 @@ function App() {
             .catch(err => {
                 console.log('ruh-roh....', err);
             });
+
     };
+
+    function postData(){
+    axios({
+      method: 'POST',
+      url: "/list",
+      data: {
+        name: shoppingItem,
+        quantity: shoppingItemQuantity,
+        unit: shoppingItemUnit,
+      }
+    }).then((response) => {
+      console.log(".then axios post")
+    }).catch((error) => {
+      console.log(error)
+    })
+
+  }
 
 
 
