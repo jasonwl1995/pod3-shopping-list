@@ -1,7 +1,7 @@
-// import {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import React from 'react';
 import axios from 'axios';
-const useEffect = React.useEffect;
+//const useEffect = React.useEffect;
 import Header from '../Header/Header.jsx'
 import './App.css';
 
