@@ -22,8 +22,6 @@ function App() {
         fetchList();
     }, []); 
     const fetchList = () => {
-    
-
         axios.get('/list')
             .then(response => {
                 console.log('got a response!', response.data);
@@ -37,22 +35,40 @@ function App() {
 
     };
 
-    function postData(){
-    axios({
-      method: 'POST',
-      url: "/list",
-      data: {
-        name: shoppingItem,
-        quantity: shoppingItemQuantity,
-        unit: shoppingItemUnit,
-      }
-    }).then((response) => {
-      console.log(".then axios post")
-    }).catch((error) => {
-      console.log(error)
-    })
+    const addItem = (evt) => {
+      evt.preventDefault(evt);
+      axios({
+        method: 'POST',
+        url: "/list",
+        data: {
+          name: shoppingItem,
+          quantity: shoppingItemQuantity,
+          unit: shoppingItemUnit,
+        }
+      }).then((response) => {
+        console.log(".then axios post", response)
+        fetchList();
+      }).catch((error) => {
+        console.log('Post Failed: ', error)
+      });
+    }
+//where else does postData run?
+  //   function postData(){
+  //   axios({
+  //     method: 'POST',
+  //     url: "/list",
+  //     data: {
+  //       name: shoppingItem,
+  //       quantity: shoppingItemQuantity,
+  //       unit: shoppingItemUnit,
+  //     }
+  //   }).then((response) => {
+  //     console.log(".then axios post")
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   })
 
-  }
+  // }
 
 
 
@@ -60,8 +76,60 @@ function App() {
         <div className="App">
             <Header />
             <main>
-                <p>Under Construction...</p>
+                <p>Add an item</p>
             </main>
+            
+            <form onSubmit={addItem}>
+              <div>Item: 
+                <input
+                  value={shoppingItem}
+                  type="text"
+                  placeholder="Item Name"
+                  onChange={evt => setShoppingItem(evt.target.value)}
+                />
+                </div>
+            
+                <span>Quantity: </span>
+                <input 
+                  value={shoppingItemQuantity}
+                  type="number"
+                  placeholder="Quantity"
+                  onChange={evt => setShoppingItemQuantity(evt.target.value)}
+                />
+                
+                <span> Unit: </span>
+                <input 
+                  value={shoppingItemUnit}
+                  type="text"
+                  placeholder="Unit"
+                  onChange={evt => setShoppingItemUnit(evt.target.value)}
+                />
+                
+                <button type="submit">Save</button>
+            </form>
+            <h2>Shopping List</h2>
+
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>th element</th>
+                </tr>
+              </thead>
+                  <tbody>
+                    {shoppingList.map(item => (
+                      <tr key={item.id}>
+                        <td>{item.name}</td>
+                        <td>{item.quantity}</td>
+                        <td>{item.unit}</td>
+                        <td>not sure what goes here</td>
+                        <button type="button">Buy</button>
+                        <button type="button">Remove</button>
+                      </tr>
+                    ))}
+                  </tbody>
+              </table>
         </div>
     );
 }
