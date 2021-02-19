@@ -19,17 +19,18 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  const list= req.body;
-  const SQLtext = `INSERT INTO list (name, quantity, unit, purchased)
+  console.log(req.body);
+  const list= req.body.data; // you may be able to take the .data off
+  const SQLtext = `INSERT INTO shopping ("name", "quantity", "unit", "purchased")
                    VALUES ($1, $2, $3, $4)`;
 
   pool.query(SQLtext, [list.name, list.quantity, list.unit, list.purchased])
     .then(dbResults => {
     console.log('Added an item to the database:', list);
-    res.sendStatus(201);
+    res.sendStatus(200);
   })
   .catch(err => {
-    console.log(`error making database query ${SQLtext}`, err);
+    console.log(`error making database query...`, err);
     res.sendStatus(500)
   }) 
     
